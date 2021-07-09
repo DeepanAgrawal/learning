@@ -1,8 +1,8 @@
-class LinkedList {
+export class LinkedList {
   constructor() {
     this.listNode = null;
+    this.listLength = 0;
   }
-
   // tested
   add(newVal) {
     let list = this.listNode;
@@ -21,24 +21,33 @@ class LinkedList {
       };
       this.listNode = list;
     }
+    this.listLength += 1;
     return this.listNode;
   }
 
   // tested
-  remove() {
+  remove(element) {
     let list = this.listNode;
     let length = this.getLength();
+    let removedElement;
     if (length === 1) {
+        removedElement = null;
       return (this.listNode = null);
     } else if (length > 1) {
       while (list.next) {
         if (list.next.next) {
           list = list.next;
         } else {
+            removedElement = list.next.val;
           list.next = null;
+          
         }
       }
     }
+    if(element){
+        return removedElement
+    }
+    this.listLength -= 1;
     return this.listNode;
   }
 
@@ -88,24 +97,31 @@ class LinkedList {
     if (index > counter) {
       console.log("index out of bound");
     }
+    this.listLength += 1;
     return this.listNode;
   }
 
   // tested
-  removeFrom(index) {
+  removeFrom(index,element) {
     let length = this.getLength();
-
+    let removedElement;
     if (index >= length) {
       console.log("Please enter valid index");
       return null;
     } else {
       if (index === 0) {
+        removedElement = this.listNode.val;
         return (this.listNode = this.listNode.next);
       } else {
         let node = this.getFrom(index - 1, "node");
+        removedElement = node.next.val;
         node.next = node.next.next;
       }
     }
+    if(element){
+        return this.listNode,removedElement;
+    }
+    this.listLength -= 1;
     return this.listNode;
   }
 
@@ -151,16 +167,56 @@ class LinkedList {
 
   // tested
   getLength() {
-    let list = this.listNode;
-    let counter = 0;
-    // ??
-    while (list && list.next) {
-      counter++;
-      list = list.next;
-    }
-    let length = list ? counter + 1 : 0;
-    return length;
+    return this.listLength;
   }
+
+  printOddandEven() {
+    let list = this.listNode;
+    let length = this.getLength();
+    let oddList;
+    let evenList;
+    while (list && list.next) {
+      evenList = evenList ? evenList + "," + list.val : list.val;
+      oddList = oddList ? oddList + "," + list.next.val : list.next.val;
+      list = list.next.next;
+    }
+    if (length % 2 > 0 && list) {
+      evenList = evenList ? evenList + "," + list.val : list.val;
+    }
+    console.log("LENGTH", length);
+    console.log("ODD LIST", oddList);
+    console.log("EVEN LIST", evenList);
+  }
+
+  printOdd() {
+    let list = this.listNode;
+    let length = this.getLength();
+    let oddList;
+    while (list && list.next) {
+      //   evenList = evenList ? evenList + "," + list.val : list.val;
+      oddList = oddList ? oddList + "," + list.next.val : list.next.val;
+      list = list.next.next;
+    }
+    console.log("LENGTH", length);
+    console.log("ODD LIST", oddList);
+  }
+
+  printEven() {
+    let list = this.listNode;
+    let length = this.getLength();
+    let oddList;
+    let evenList;
+    while (list && list.next) {
+      evenList = evenList ? evenList + "," + list.val : list.val;
+      list = list.next.next;
+    }
+    if (length % 2 > 0 && list) {
+      evenList = evenList ? evenList + "," + list.val : list.val;
+    }
+    console.log("LENGTH", length);
+    console.log("EVEN LIST", evenList);
+  }
+
 }
 
 //Add
@@ -199,3 +255,23 @@ class LinkedList {
 // c.add(6);
 // c.add(7);
 // c.iterate();
+
+// var d = new LinkedList();
+// d.add(1);
+// d.add(2);
+// d.add(3);
+// d.add(4);
+// d.add(5);
+// d.add(6);
+// d.add(7);
+// d.iterate();
+
+1 -> 2 -> 3 -> 4 -> 5
+
+Stack{
+    //push
+    //pop
+    //peek
+    //length
+}
+
